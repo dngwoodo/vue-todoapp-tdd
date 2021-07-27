@@ -3,7 +3,7 @@ import given from "given2";
 
 import TodoApp from "./TodoApp.vue";
 
-describe("App.vue", () => {
+describe("TodoApp.vue", () => {
   const handleChange = jest.fn();
   const handleClickAddTodo = jest.fn();
   const handleClickDeleteTodo = jest.fn();

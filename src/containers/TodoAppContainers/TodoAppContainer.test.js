@@ -2,7 +2,7 @@ import { mount } from "@vue/test-utils";
 
 import TodoAppContainer from "./TodoAppContainer.vue";
 
-describe("App.vue", () => {
+describe("TodoAppContainer.vue", () => {
   function renderTodoAppContainer() {
     const wrapper = mount(TodoAppContainer);
 
