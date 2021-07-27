@@ -1,55 +1,28 @@
-import { shallowMount } from "@vue/test-utils";
+import { mount } from "@vue/test-utils";
 
 import App from "./App.vue";
 
 describe("App.vue", () => {
-  let wrapper;
+  function renderApp() {
+    const wrapper = mount(App);
 
-  beforeEach(() => {
-    wrapper = shallowMount(App);
-  });
+    function queryBySelector(selector) {
+      return wrapper.find(selector);
+    }
 
-  function queryBySelector(selector) {
-    return wrapper.find(selector);
+    return {
+      wrapper,
+      queryBySelector,
+    };
   }
 
   it("renders title, input, button", () => {
+    const { queryBySelector } = renderApp();
+
     expect(queryBySelector("h1").text()).toMatch("Todo-App");
     expect(queryBySelector("input").attributes("placeholder")).toMatch(
       "할 일을 입력해주세요"
     );
     expect(queryBySelector("[data-testid=add-todo]").text()).toMatch("추가");
-  });
-
-  it("listens '추가' click event", async () => {
-    queryBySelector("[placeholder='할 일을 입력해주세요']").setValue(
-      "아무것도 안하기"
-    );
-
-    await queryBySelector("[data-testid=add-todo]").trigger("click");
-
-    expect(queryBySelector("p").text()).toMatch("아무것도 안하기");
-  });
-
-  it("listens '삭제' click event", async () => {
-    queryBySelector("[placeholder='할 일을 입력해주세요']").setValue(
-      "아무것도 안하기"
-    );
-
-    await queryBySelector("[data-testid=add-todo]").trigger("click");
-    await queryBySelector("[data-testid=delete-todo]").trigger("click");
-
-    expect(wrapper.text()).not.toContain("아무것도 안하기");
-  });
-
-  it("listens 'todo' click event", async () => {
-    queryBySelector("[placeholder='할 일을 입력해주세요']").setValue(
-      "아무것도 안하기"
-    );
-
-    await queryBySelector("[data-testid=add-todo]").trigger("click");
-    await queryBySelector("p").trigger("click");
-
-    expect(queryBySelector("p").attributes("class")).toContain("done");
   });
 });
